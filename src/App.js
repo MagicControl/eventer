@@ -1,10 +1,16 @@
 import React from 'react';
 
-import { connect } from './utils/connect';
+import Registration from './modules/registration/view';
+
+import 'antd/dist/antd.css';
 
 class App extends React.Component {
     render() {
-        return <div className="app">Nothing</div>;
+        return (
+            <div className="app">
+                <Registration />
+            </div>
+        );
     }
 }
 
