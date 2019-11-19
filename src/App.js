@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Registration from './modules/registration/view';
+import Registration from './modules/events-list-view/view';
 
 import 'antd/dist/antd.css';
 
