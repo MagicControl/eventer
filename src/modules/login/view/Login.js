@@ -1,24 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Form, Icon, Input, Button, Typography } from 'antd';
 
-import styles from './registration.module.scss';
+import styles from './login.module.scss';
 
-const Registration = ({ user, form }) => {
+const Login = ({ user, form }) => {
+    const history = useHistory();
     const { getFieldDecorator } = form;
     const handleSubmit = e => {
         e.preventDefault();
-        form.validateFields((err, values) => {
+        form.validateFields(async (err, values) => {
             if (!err) {
                 const { email, password } = values;
-                user.register(email, password);
+                await user.login(email, password);
+                history.push('/');
             }
         });
     };
 
     return (
         <div className={styles.registration}>
-            <Typography.Title level={3}>Register new User</Typography.Title>
+            <Typography.Title level={3}>Welcome to Eventer!</Typography.Title>
             <Form onSubmit={handleSubmit}>
                 <Form.Item>
                     {getFieldDecorator('email', {
@@ -63,13 +65,13 @@ const Registration = ({ user, form }) => {
                 </Form.Item>
                 <Form.Item className={styles['register-button']}>
                     <Button type="primary" htmlType="submit">
-                        Register
+                        Login
                     </Button>{' '}
-                    or <Link to="/login">login</Link>
+                    or <Link to="/registration">Register</Link>
                 </Form.Item>
             </Form>
         </div>
     );
 };
 
-export default Form.create({ name: 'registration' })(Registration);
+export default Form.create({ name: 'login' })(Login);

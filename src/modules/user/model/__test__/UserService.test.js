@@ -1,27 +1,43 @@
 import { UserService } from '../UserService';
-import mockApi from '../../../api/__mocks__';
 
 describe('UserService', () => {
+    let userService;
+    let api;
+
+    beforeEach(() => {
+        api = {
+            get: jest.fn(),
+            post: jest.fn(),
+        };
+        userService = new UserService(api);
+    });
+
     it('loads current user data from api', async () => {
         const data = { email: 'email', id: 'id' };
-        const api = mockApi({ data });
-        const get = jest.spyOn(api, 'get');
-        const userService = new UserService(api);
+        api.get.mockReturnValueOnce({ data });
         const result = await userService.getCurrentUser();
-        expect(get).toBeCalledWith('/users/me');
+        expect(api.get).toBeCalledWith('/users/me');
         expect(result).toEqual(data);
     });
 
     it('sends user data and returns created user', async () => {
         const data = { email: 'email', password: 'password' };
-        const api = mockApi({ data: { ...data, id: 1 } });
-        const post = jest.spyOn(api, 'post');
-        const userService = new UserService(api);
+        api.post.mockReturnValueOnce({ data: { ...data, id: 1 } });
         const result = await userService.registerNewUser(
             data.email,
             data.password
         );
-        expect(post).toBeCalledWith('/users/register', data);
+        expect(api.post).toBeCalledWith('/users/register', data);
         expect(result).toEqual({ ...data, id: 1 });
+    });
+
+    it('sends user credentials and returns a token', async () => {
+        const data = { email: 'email', password: 'password' };
+        api.post.mockReturnValueOnce({ data });
+        const result = await userService.login(data.email, data.password);
+        expect(api.post).toBeCalledWith('/users/token', {
+            username: data.email,
+            password: data.password,
+        });
     });
 });

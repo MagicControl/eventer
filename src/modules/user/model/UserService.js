@@ -15,4 +15,13 @@ export class UserService {
         });
         return data;
     }
+
+    async login(email, password) {
+        const { data } = await this.api.post('/users/token/', {
+            username: email,
+            password,
+        });
+        console.log(data);
+        return data;
+    }
 }

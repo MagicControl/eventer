@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 
 const Events = lazy(() => import('./modules/events-list-view/view'));
 const Registration = lazy(() => import('./modules/registration/view'));
+const Login = lazy(() => import('./modules/login/view'));
 const EventDetails = lazy(() => import('./modules/event-details/view'));
 
 class App extends React.Component {
@@ -16,6 +17,9 @@ class App extends React.Component {
                         <Switch>
                             <Route exact path="/">
                                 <Events />
+                            </Route>
+                            <Route exact path="/login">
+                                <Login />
                             </Route>
                             <Route exact path="/registration">
                                 <Registration />

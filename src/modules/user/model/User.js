@@ -2,7 +2,7 @@ import { decorate, observable, action } from 'mobx';
 
 export class User {
     constructor(userService) {
-        this.id = null;
+        this.token = null;
         this.email = null;
         this.userService = userService;
     }
@@ -14,17 +14,27 @@ export class User {
     }
 
     async register(userEmail, userPassword) {
-        const { id, email } = await this.userService.registerNewUser(
+        const { email } = await this.userService.registerNewUser(
             userEmail,
             userPassword
         );
-        this.id = id;
         this.email = email;
+    }
+
+    async login(userEmail, userPassword) {
+        const { token } = await this.userService.login(userEmail, userPassword);
+        this.email = userEmail;
+        this.token = token;
+    }
+
+    logout() {
+        this.token = null;
+        this.email = null;
     }
 }
 
 decorate(User, {
-    id: observable,
+    token: observable,
     email: observable,
     loadData: action,
 });

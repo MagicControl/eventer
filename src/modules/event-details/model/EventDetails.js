@@ -19,9 +19,9 @@ export class EventDetails {
         this.data = await this.eventService.getEventById(id);
     }
 
-    async applyUpdates() {
+    async applyUpdates(token) {
         const { id, ...data } = this.data;
-        await this.eventService.updateEvent(id, data);
+        await this.eventService.updateEvent(id, data, token);
     }
 }
 

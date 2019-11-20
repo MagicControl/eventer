@@ -8,8 +8,12 @@ export class EventService {
         return data;
     }
 
-    async updateEvent(id, eventData) {
-        const { data } = await this.api.patch(`/events/${id}`, eventData);
+    async updateEvent(id, eventData, token) {
+        const { data } = await this.api.patch(`/events/${id}`, eventData, {
+            headers: {
+                Authorization: `Token ${token}`,
+            },
+        });
         return data;
     }
 }
