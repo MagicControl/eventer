@@ -28,8 +28,21 @@ describe('EventsList', () => {
     it('loads new data after active page change', async () => {
         eventsList.setActivePage(2);
         expect(els.loadEvents).toBeCalledWith({
-            offset: 40,
+            offset: 20,
             limit: 20,
         });
+    });
+
+    it('does events search and resets pagination params', async () => {
+        els.loadEvents.mockReturnValueOnce({
+            count: 30,
+            results: [1, 2, 3],
+        });
+
+        await eventsList.search('qwe', '123', '234');
+        expect(eventsList.events).toEqual([1, 2, 3]);
+        expect(eventsList.totalItems).toEqual(30);
+        expect(eventsList.totalPages).toEqual(2);
+        expect(eventsList.currentPage).toEqual(1);
     });
 });
