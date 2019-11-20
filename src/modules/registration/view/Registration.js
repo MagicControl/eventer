@@ -1,17 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Form, Icon, Input, Button, Typography } from 'antd';
 
 import styles from './registration.module.scss';
 
 const Registration = ({ user, form }) => {
+    const history = useHistory();
     const { getFieldDecorator } = form;
     const handleSubmit = e => {
         e.preventDefault();
-        form.validateFields((err, values) => {
+        form.validateFields(async (err, values) => {
             if (!err) {
                 const { email, password } = values;
-                user.register(email, password);
+                await user.register(email, password);
+                history.push('/login');
             }
         });
     };

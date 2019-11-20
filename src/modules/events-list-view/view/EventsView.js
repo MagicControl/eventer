@@ -7,12 +7,8 @@ import styles from './events-list-view.module.scss';
 
 export const EventsView = observer(({ events }) =>
     events.map(({ id, name, logo_uri, start_date }) => (
-        <Link key={id} to={`/event/${id}`}>
-            <Card
-                className={styles['event-card']}
-                hoverable
-                cover={<img alt={name} src={logo_uri} />}
-            >
+        <Link className={styles['event-card']} key={id} to={`/event/${id}`}>
+            <Card hoverable cover={<img alt={name} src={logo_uri} />}>
                 <Card.Meta
                     title={name}
                     description={`Starting: ${moment(start_date).format(

@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import Header from './components/Header';
+
 import 'antd/dist/antd.css';
 
 const Events = lazy(() => import('./modules/events-list-view/view'));
@@ -12,10 +14,11 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <Suspense fallback={<div>Loading...</div>}>
-                    <Router>
+                <Router>
+                    <Suspense fallback={<div>Loading...</div>}>
                         <Switch>
                             <Route exact path="/">
+                                <Header />
                                 <Events />
                             </Route>
                             <Route exact path="/login">
@@ -25,11 +28,12 @@ class App extends React.Component {
                                 <Registration />
                             </Route>
                             <Route exact path="/event/:id">
+                                <Header />
                                 <EventDetails />
                             </Route>
                         </Switch>
-                    </Router>
-                </Suspense>
+                    </Suspense>
+                </Router>
             </div>
         );
     }

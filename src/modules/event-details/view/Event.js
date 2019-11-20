@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Row, Col, Input, Icon, Button, Typography } from 'antd';
+import { Row, Col, Input, Icon, Button } from 'antd';
 
 import styles from './event.module.scss';
 
@@ -8,7 +8,7 @@ export const Event = ({ user, eventDetails }) => {
     const { id } = useParams();
     useEffect(() => {
         eventDetails.loadData(id);
-    }, []);
+    }, [id, eventDetails]);
 
     if (!eventDetails.data) {
         return null;
@@ -30,7 +30,7 @@ export const Event = ({ user, eventDetails }) => {
                     <Col xs={24} md={16}>
                         <Input
                             addonBefore="Title"
-                            addonAfter={!user.id && <Icon type="lock" />}
+                            addonAfter={!user.token && <Icon type="lock" />}
                             value={name}
                             onChange={updateName}
                             disabled={!user.token}

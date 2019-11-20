@@ -8,7 +8,7 @@ import styles from './events-list-view.module.scss';
 export const ListView = ({ eventsList }) => {
     useEffect(() => {
         eventsList.load();
-    }, []);
+    }, [eventsList]);
 
     const setPage = page => eventsList.setActivePage(page);
 
