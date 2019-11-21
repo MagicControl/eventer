@@ -1,10 +1,11 @@
 import { decorate, observable, action } from 'mobx';
 
 export class User {
-    constructor(userService) {
-        this.token = null;
-        this.email = null;
+    constructor(userService, storage) {
         this.userService = userService;
+        this.storage = storage;
+        this.email = null;
+        this.token = this.storage.getToken() || null;
     }
 
     async loadData() {
@@ -25,11 +26,13 @@ export class User {
         const { token } = await this.userService.login(userEmail, userPassword);
         this.email = userEmail;
         this.token = token;
+        this.storage.saveToken(token);
     }
 
     logout() {
         this.token = null;
         this.email = null;
+        this.storage.removeToken();
     }
 }
 

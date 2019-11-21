@@ -35,7 +35,7 @@ describe('UserService', () => {
         const data = { email: 'email', password: 'password' };
         api.post.mockReturnValueOnce({ data });
         const result = await userService.login(data.email, data.password);
-        expect(api.post).toBeCalledWith('/users/token', {
+        expect(api.post).toBeCalledWith('/users/token/', {
             username: data.email,
             password: data.password,
         });

@@ -26,7 +26,7 @@ describe('Event', () => {
         es.getEventById.mockReturnValueOnce(mockData);
         await eventInstance.loadData('id');
         eventInstance.data.name = 'new name';
-        await eventInstance.applyUpdates();
-        expect(es.updateEvent).toBeCalledWith('id', { name: 'new name' });
+        await eventInstance.applyUpdates(123);
+        expect(es.updateEvent).toBeCalledWith('id', { name: 'new name' }, 123);
     });
 });

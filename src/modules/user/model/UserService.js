@@ -21,7 +21,6 @@ export class UserService {
             username: email,
             password,
         });
-        console.log(data);
         return data;
     }
 }

@@ -18,7 +18,11 @@ describe('EventService', () => {
     });
 
     it('makes a request to update an event', () => {
-        es.updateEvent('id', { name: 'new name' });
-        expect(api.patch).toBeCalledWith('/events/id', { name: 'new name' });
+        es.updateEvent('id', { name: 'new name' }, 123);
+        expect(api.patch).toBeCalledWith(
+            '/events/id',
+            { name: 'new name' },
+            { headers: { Authorization: 'Token 123' } }
+        );
     });
 });
